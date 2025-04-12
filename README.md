@@ -760,7 +760,9 @@ void ShowMainMenue()
 int main()
 
 {
+cout <<"well come "<<endl;
 	ShowMainMenue();
 	system("pause>0");
 	return 0;
+
 }

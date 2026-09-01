@@ -1,79 +1,63 @@
 # Bank System - C++
 
-A simple **Bank Management System** developed using **C++**.
+A console-based **Bank Management System** developed using **C++**.
 
-The project is a console-based application that allows users to manage bank clients and their account information using a text file as a simple database.
+The project allows managing bank clients, storing their information in a text file, and performing basic banking transactions such as **Deposit, Withdraw, and Total Balance**.
 
 ## Features
 
-The system provides the following operations:
+### Client Management
 
-1. **Show Client List**
+The main menu provides the following operations:
 
-   * Display all registered clients.
-   * Show account number, PIN code, name, phone number, and account balance.
+* **Show Client List**
+* **Add New Client**
+* **Delete Client**
+* **Update Client Information**
+* **Find Client**
+* **Transactions**
+* **Exit**
 
-2. **Add New Client**
+### Banking Transactions
 
-   * Add a new client to the system.
-   * Check whether the account number already exists.
-   * Store the client information in `Clients.txt`.
+The Transactions menu provides:
 
-3. **Delete Client**
+* **Deposit**
+* **Withdraw**
+* **Show Total Balances**
+* **Return to Main Menu**
 
-   * Search for a client using the account number.
-   * Display the client's information.
-   * Ask for confirmation before deletion.
-
-4. **Update Client**
-
-   * Search for a client using the account number.
-   * Display the current information.
-   * Update the client's PIN, name, phone, and balance.
-
-5. **Find Client**
-
-   * Search for a specific client by account number.
-   * Display the complete client information.
-
-6. **Exit**
-
-   * Close the program.
+The project includes validation when withdrawing money to prevent the withdrawal amount from exceeding the client's current balance.
 
 ## Technologies Used
 
 * C++
 * Standard Template Library (STL)
+* `struct`
 * `vector`
-* `fstream`
 * `string`
+* `fstream`
 * File Handling
-* Structures
 * Functions
-* Enumerations
+* `enum`
+* `switch`
 * Basic CRUD Operations
 
 ## Data Storage
 
-Client information is stored in a text file:
+Client data is stored in:
 
 ```text
 Clients.txt
 ```
 
-Each client is stored as a single line using the following separator:
+The project uses the following separator:
 
 ```text
 #//#
 ```
 
-Example:
-
-```text
-A1001#//#1234#//#Abdulrahman#//#0999999999#//#1500.000000
-```
-
-The data represents:
+A client record contains:
 
 ```text
 Account Number
@@ -83,175 +67,282 @@ Phone
 Account Balance
 ```
 
-## Project Structure
+The `sClient` structure represents a client in the program.
+
+## Example Data Format
 
 ```text
-Bank-System/
-│
-├── BankSystem.cpp
-├── Clients.txt
-└── README.md
+A1001#//#1234#//#Abdulrahman#//#0999999999#//#1500
 ```
 
-## Client Structure
+The program converts records between text lines and `sClient` objects using:
 
-The project uses a structure to represent a bank client:
+```text
+ConvertLinetoRecord()
+ConvertRecordToLine()
+```
+
+The line-to-record conversion also converts the balance from `string` to `double`.
+
+## Project Architecture
+
+The project follows a simple layered flow:
+
+```text
+User
+ │
+ ▼
+Main Menu
+ │
+ ├── Client Management
+ │     ├── List Clients
+ │     ├── Add Client
+ │     ├── Delete Client
+ │     ├── Update Client
+ │     └── Find Client
+ │
+ └── Transactions
+       ├── Deposit
+       ├── Withdraw
+       └── Total Balances
+                │
+                ▼
+          Clients.txt
+```
+
+## Client Management
+
+### Add Client
+
+When adding a client, the program asks for:
+
+* Account Number
+* PIN Code
+* Name
+* Phone
+* Account Balance
+
+The system also checks whether the account number already exists before accepting the new client.
+
+### Find Client
+
+The system searches for a client using the account number and displays the client's complete information if found.
+
+### Update Client
+
+The system allows updating:
+
+* PIN Code
+* Name
+* Phone
+* Account Balance
+
+The account number remains unchanged.
+
+### Delete Client
+
+The project uses a **Mark for Delete** approach.
+
+Instead of immediately removing an element from the vector, the client is marked:
 
 ```cpp
-struct sClient
-{
-    string AccountNumber;
-    string PinCode;
-    string Name;
-    string Phone;
-    double AccountBalance;
-    bool MarkForDelete = false;
-};
+MarkForDelete = true;
 ```
+
+When the file is saved, marked clients are excluded from the rewritten file.
+
+## Transactions
+
+### Deposit
+
+The user enters an account number and deposit amount.
+
+The amount is added to the client's balance:
+
+```cpp
+C.AccountBalance += Amount;
+```
+
+The updated data is then saved to the file.
+
+### Withdraw
+
+The user enters an account number and withdrawal amount.
+
+Before processing the transaction, the program checks that:
+
+```text
+Withdrawal Amount <= Account Balance
+```
+
+The withdrawal is then performed by sending a negative amount to the balance update function.
+
+Conceptually:
+
+```text
+Balance = Balance - Withdrawal Amount
+```
+
+### Total Balances
+
+The system calculates the total balance of all clients:
+
+```cpp
+TotalBalances += Client.AccountBalance;
+```
+
+and displays the final total.
+
+## File Handling
+
+The project uses `fstream` to manage the `Clients.txt` file.
+
+### Reading
+
+```cpp
+ios::in
+```
+
+is used to read existing client records.
+
+### Writing
+
+```cpp
+ios::out
+```
+
+is used when rewriting the file.
+
+### Appending
+
+```cpp
+ios::out | ios::app
+```
+
+is used to add a new client at the end of the file.
 
 ## Main Menu
 
-The application provides the following menu:
-
 ```text
 ===========================================
-        Main Menu Screen
+        Main Menue Screen
 ===========================================
     [1] Show Client List.
     [2] Add New Client.
     [3] Delete Client.
     [4] Update Client Info.
     [5] Find Client.
-    [6] Exit.
+    [6] Transactions.
+    [7] Exit.
 ===========================================
 ```
 
-## Program Concepts
+## Transactions Menu
+
+```text
+===========================================
+        Transactions Menue Screen
+===========================================
+    [1] Deposit.
+    [2] Withdraw.
+    [3] Total Balances.
+    [4] Main Menue.
+===========================================
+```
+
+These menus are implemented using enumerations and `switch` statements.
+
+## Program Flow
+
+The application starts from:
+
+```cpp
+int main()
+{
+    ShowMainMenue();
+    system("pause>0");
+    return 0;
+}
+```
+
+The main menu then directs the user to the appropriate operation.
+
+## Core Concepts Demonstrated
 
 This project demonstrates several important C++ programming concepts:
 
-### Structures
-
-Used to group client information into one object.
-
-### Vectors
-
-Used to temporarily store multiple clients in memory.
-
-### File Handling
-
-The project uses `fstream` to read and write client data.
-
-### String Processing
-
-The `SplitString()` function separates client data using a custom delimiter.
-
-### Type Conversion
-
-`stod()` converts the account balance from `string` to `double`.
-
-### CRUD Operations
-
-The project implements:
-
 ```text
-Create → Add Client
-Read   → List / Find Client
-Update → Update Client
-Delete → Delete Client
+Structures
+    ↓
+Vectors
+    ↓
+Functions
+    ↓
+File Handling
+    ↓
+String Processing
+    ↓
+Searching
+    ↓
+CRUD Operations
+    ↓
+Transactions
+    ↓
+Menu-Driven Application
 ```
-
-## How the System Works
-
-The general data flow is:
-
-```text
-              Clients.txt
-                   │
-                   ▼
-       Load Clients From File
-                   │
-                   ▼
-             vector<sClient>
-                   │
-        ┌──────────┼──────────┐
-        ▼          ▼          ▼
-       Find      Update     Delete
-        │          │          │
-        └──────────┼──────────┘
-                   ▼
-          Save Data To File
-                   │
-                   ▼
-              Clients.txt
-```
-
-## Learning Objectives
-
-This project was developed to practice:
-
-* C++ functions
-* Structures
-* Vectors
-* File input/output
-* String manipulation
-* Searching
-* Updating records
-* Deleting records
-* Menu-driven applications
-* Basic software organization
 
 ## How to Run
 
-### 1. Clone the Repository
+### Clone the Repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/ABDRHMA41/Bank-.git
 ```
 
-### 2. Open the Project
+### Enter the Project Directory
 
-Open the project using a C++ development environment such as:
+```bash
+cd Bank-
+```
 
-* Visual Studio
-* Visual Studio Code
-* Code::Blocks
-* CLion
+### Compile
 
-### 3. Compile
-
-Using g++:
+Using `g++`:
 
 ```bash
 g++ BankSystem.cpp -o BankSystem
 ```
 
-### 4. Run
+### Run
 
-```bash
-./BankSystem
-```
-
-On Windows:
+Windows:
 
 ```bash
 BankSystem.exe
 ```
 
+Linux/macOS:
+
+```bash
+./BankSystem
+```
+
+> Make sure `Clients.txt` is available in the appropriate working directory when running the program.
+
 ## Future Improvements
 
-Possible improvements include:
+Possible future improvements include:
 
-* Password/PIN validation
-* Deposit and withdrawal operations
-* Transfer money between accounts
+* Input validation
+* Login and authentication system
 * Transaction history
-* User authentication
-* Better input validation
-* Database integration using SQL
-* Separation into multiple `.h` and `.cpp` files
+* Transfer between accounts
+* Better error handling
+* SQL database integration
 * Object-Oriented Programming version
-* Graphical User Interface
+* Separation into `.h` and `.cpp` files
+* Improved user interface
+* Transaction reports
 
 ## Author
 
@@ -259,7 +350,17 @@ Possible improvements include:
 
 C++ Programming Project
 
+## Purpose
+
+This project was created for **learning and practicing C++ programming**, especially:
+
+* File Handling
+* Data Structures
+* Functions
+* CRUD Operations
+* Client Management
+* Basic Banking Transactions
+
 ## License
 
-This project is created for **educational and learning purposes**.
-
+This project is intended for **educational purposes**.

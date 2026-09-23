@@ -1,366 +1,299 @@
-# Bank System - C++
+Bank System (C++ Console Application)
 
-A console-based **Bank Management System** developed using **C++**.
+An advanced console-based Bank Management System developed in C++.
 
-The project allows managing bank clients, storing their information in a text file, and performing basic banking transactions such as **Deposit, Withdraw, and Total Balance**.
+This project evolved from a basic client management application into a more complete banking administration system. It includes client management, banking transactions, user management, authentication, and Bitwise-based permission control.
 
-## Features
+The project was continuously improved throughout the ProgrammingAdvices courses, with new algorithms, data structures, validation, and system-management features added over time.
 
-### Client Management
+⸻
 
-The main menu provides the following operations:
+Key Features
 
-* **Show Client List**
-* **Add New Client**
-* **Delete Client**
-* **Update Client Information**
-* **Find Client**
-* **Transactions**
-* **Exit**
+1. Client Management
 
-### Banking Transactions
+* Show Client List: Display all registered clients in a formatted table.
+* Add New Client: Add new clients with validation against duplicate Account Numbers.
+* Update Client: Modify existing client information.
+* Delete Client: Delete clients using the Mark for Delete pattern.
+* Find Client: Search for a client using the Account Number.
+* Client Data Validation: Validate account information before saving changes.
 
-The Transactions menu provides:
+⸻
 
-* **Deposit**
-* **Withdraw**
-* **Show Total Balances**
-* **Return to Main Menu**
+2. User Management & Permissions
 
-The project includes validation when withdrawing money to prevent the withdrawal amount from exceeding the client's current balance.
+The system includes a complete user-management and authentication system.
 
-## Technologies Used
+* Login System: Users must authenticate using a Username and Password.
+* User CRUD Operations: Show, Add, Update, Delete, and Find users.
+* Permission System: Control access to system operations using Bitwise permissions.
+* Granular Permissions: Permissions can be combined to provide different levels of access.
+* Admin Protection: The Admin superuser is protected from deletion or loss of full privileges.
+
+Bitwise Permission System
+
+Permissions are represented using integer flags and combined using bitwise operations.
+
+For example:
+
+Read        = 1
+Add         = 2
+Delete      = 4
+Update      = 8
+Transactions = 16
+ManageUsers = 32
+
+Multiple permissions can be combined into a single value:
+
+Permissions = Read | Add | Update
+
+The special value:
+
+-1
+
+grants full system access to the administrator.
+
+⸻
+
+3. Banking Transactions
+
+The system provides basic banking transaction functionality.
+
+* Deposit: Add money to a client’s account.
+* Withdraw: Withdraw money after validating the available balance.
+* Balance Validation: Prevent withdrawals that exceed the account balance.
+* Total Balances: Calculate and display the total balance of all client accounts.
+* Transaction Permissions: Access to transaction operations is controlled by user permissions.
+
+⸻
+
+4. Authentication & Access Control
+
+The application follows an authentication-first workflow:
+
+Username + Password
+        │
+        ▼
+Authentication
+        │
+        ▼
+Permission Validation
+        │
+        ▼
+Main Menu
+        │
+        ├── Client Management
+        ├── Transactions
+        ├── User Management
+        └── Logout
+
+Users can only access operations allowed by their assigned permissions.
+
+⸻
+
+Algorithms & Programming Concepts
+
+The project applies concepts learned throughout the ProgrammingAdvices courses, including:
+
+* Object-oriented programming
+* Functions and modular programming
+* Structures and enumerations
+* File handling
+* Vectors and dynamic data
+* Searching and filtering
+* Data validation
+* Record serialization and parsing
+* CRUD operations
+* Algorithmic problem solving
+* Bitwise operations
+* Permission flags
+* Authentication and access control
+* Data persistence
+
+The project was also updated as part of Course 8 – Algorithms Level 4, where additional algorithmic concepts and improvements were applied to the existing Bank System.
+
+⸻
+
+Architecture & Data Handling
+
+The application is organized into separate components responsible for different system operations.
+
+Main Program
+│
+├── Login & Authentication
+│
+├── Client Management
+│   ├── Show Clients
+│   ├── Add Client
+│   ├── Update Client
+│   ├── Delete Client
+│   └── Find Client
+│
+├── Transactions
+│   ├── Deposit
+│   ├── Withdraw
+│   └── Total Balances
+│
+├── User Management
+│   ├── Show Users
+│   ├── Add User
+│   ├── Update User
+│   ├── Delete User
+│   └── Find User
+│
+└── Permission System
+    └── Bitwise Access Control
+
+Data Persistence
+
+The application stores data locally in text files and loads it into memory when required.
+
+Data is separated using the custom delimiter:
+
+#//#
+
+The project uses std::vector for in-memory data management and rewrites the corresponding files when records are modified.
+
+⸻
+
+Data Storage
+
+Clients.txt
+
+Client records follow this format:
+
+AccountNumber#//#PINCode#//#Name#//#Phone#//#AccountBalance
+
+Example:
+
+A1001#//#1234#//#Abdulrahman#//#0999999999#//#1500
+
+Users.txt
+
+User records follow this format:
+
+Username#//#Password#//#Permissions
+
+Example:
+
+Admin#//#1234#//#-1
+
+Where:
+
+-1 = Full Permissions
+
+⸻
+
+Main Menu
+
+After successful authentication, authorized users can access:
+
+===========================
+        MAIN MENU
+===========================
+[1] Client Management
+[2] Transactions
+[3] Manage Users
+[4] Logout
+
+The available operations depend on the permissions assigned to the logged-in user.
+
+⸻
+
+Project Evolution
+
+Initial Version
+
+The original project focused mainly on:
+
+* Client management
+* Adding clients
+* Updating clients
+* Deleting clients
+* Searching for clients
+* Reading and writing client data
+
+Updated Version
+
+The system was expanded with:
+
+* User authentication
+* User management
+* Bitwise permissions
+* Role-based access concepts
+* Banking transactions
+* Deposit and withdrawal
+* Total balance calculation
+* Permission-based menu access
+* Administrator protection
+* Additional algorithms and improvements
+
+This transformation turned the project from a basic client-management application into a more complete Bank Management System.
+
+⸻
+
+Technologies
 
 * C++
-* Standard Template Library (STL)
-* `struct`
-* `vector`
-* `string`
-* `fstream`
-* File Handling
-* Functions
-* `enum`
-* `switch`
-* Basic CRUD Operations
+* Standard C++ Library
+* File I/O
+* std::vector
+* Bitwise Operations
+* Object-Oriented Programming
+* Algorithms & Problem Solving
 
-## Data Storage
+⸻
 
-Client data is stored in:
+Learning Objectives
 
-```text
-Clients.txt
-```
+This project was developed as a practical application of programming and algorithmic concepts learned through the ProgrammingAdvices courses.
 
-The project uses the following separator:
+It focuses on transforming theoretical programming concepts into a real-world style application involving:
 
-```text
-#//#
-```
+* Data management
+* Authentication
+* Authorization
+* Algorithms
+* File persistence
+* Business logic
+* Modular programming
+* Problem solving
 
-A client record contains:
+⸻
 
-```text
-Account Number
-PIN Code
-Name
-Phone
-Account Balance
-```
-
-The `sClient` structure represents a client in the program.
-
-## Example Data Format
-
-```text
-A1001#//#1234#//#Abdulrahman#//#0999999999#//#1500
-```
-
-The program converts records between text lines and `sClient` objects using:
-
-```text
-ConvertLinetoRecord()
-ConvertRecordToLine()
-```
-
-The line-to-record conversion also converts the balance from `string` to `double`.
-
-## Project Architecture
-
-The project follows a simple layered flow:
-
-```text
-User
- │
- ▼
-Main Menu
- │
- ├── Client Management
- │     ├── List Clients
- │     ├── Add Client
- │     ├── Delete Client
- │     ├── Update Client
- │     └── Find Client
- │
- └── Transactions
-       ├── Deposit
-       ├── Withdraw
-       └── Total Balances
-                │
-                ▼
-          Clients.txt
-```
-
-## Client Management
-
-### Add Client
-
-When adding a client, the program asks for:
-
-* Account Number
-* PIN Code
-* Name
-* Phone
-* Account Balance
-
-The system also checks whether the account number already exists before accepting the new client.
-
-### Find Client
-
-The system searches for a client using the account number and displays the client's complete information if found.
-
-### Update Client
-
-The system allows updating:
-
-* PIN Code
-* Name
-* Phone
-* Account Balance
-
-The account number remains unchanged.
-
-### Delete Client
-
-The project uses a **Mark for Delete** approach.
-
-Instead of immediately removing an element from the vector, the client is marked:
-
-```cpp
-MarkForDelete = true;
-```
-
-When the file is saved, marked clients are excluded from the rewritten file.
-
-## Transactions
-
-### Deposit
-
-The user enters an account number and deposit amount.
-
-The amount is added to the client's balance:
-
-```cpp
-C.AccountBalance += Amount;
-```
-
-The updated data is then saved to the file.
-
-### Withdraw
-
-The user enters an account number and withdrawal amount.
-
-Before processing the transaction, the program checks that:
-
-```text
-Withdrawal Amount <= Account Balance
-```
-
-The withdrawal is then performed by sending a negative amount to the balance update function.
-
-Conceptually:
-
-```text
-Balance = Balance - Withdrawal Amount
-```
-
-### Total Balances
-
-The system calculates the total balance of all clients:
-
-```cpp
-TotalBalances += Client.AccountBalance;
-```
-
-and displays the final total.
-
-## File Handling
-
-The project uses `fstream` to manage the `Clients.txt` file.
-
-### Reading
-
-```cpp
-ios::in
-```
-
-is used to read existing client records.
-
-### Writing
-
-```cpp
-ios::out
-```
-
-is used when rewriting the file.
-
-### Appending
-
-```cpp
-ios::out | ios::app
-```
-
-is used to add a new client at the end of the file.
-
-## Main Menu
-
-```text
-===========================================
-        Main Menue Screen
-===========================================
-    [1] Show Client List.
-    [2] Add New Client.
-    [3] Delete Client.
-    [4] Update Client Info.
-    [5] Find Client.
-    [6] Transactions.
-    [7] Exit.
-===========================================
-```
-
-## Transactions Menu
-
-```text
-===========================================
-        Transactions Menue Screen
-===========================================
-    [1] Deposit.
-    [2] Withdraw.
-    [3] Total Balances.
-    [4] Main Menue.
-===========================================
-```
-
-These menus are implemented using enumerations and `switch` statements.
-
-## Program Flow
-
-The application starts from:
-
-```cpp
-int main()
-{
-    ShowMainMenue();
-    system("pause>0");
-    return 0;
-}
-```
-
-The main menu then directs the user to the appropriate operation.
-
-## Core Concepts Demonstrated
-
-This project demonstrates several important C++ programming concepts:
-
-```text
-Structures
-    ↓
-Vectors
-    ↓
-Functions
-    ↓
-File Handling
-    ↓
-String Processing
-    ↓
-Searching
-    ↓
-CRUD Operations
-    ↓
-Transactions
-    ↓
-Menu-Driven Application
-```
-
-## How to Run
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/ABDRHMA41/Bank-.git
-```
-
-### Enter the Project Directory
-
-```bash
-cd Bank-
-```
-
-### Compile
-
-Using `g++`:
-
-```bash
-g++ BankSystem.cpp -o BankSystem
-```
-
-### Run
-
-Windows:
-
-```bash
-BankSystem.exe
-```
-
-Linux/macOS:
-
-```bash
-./BankSystem
-```
-
-> Make sure `Clients.txt` is available in the appropriate working directory when running the program.
-
-## Future Improvements
+Future Improvements
 
 Possible future improvements include:
 
-* Input validation
-* Login and authentication system
+* Database integration using SQL Server
+* Password hashing and stronger authentication
+* More advanced roles and permissions
 * Transaction history
-* Transfer between accounts
-* Better error handling
-* SQL database integration
-* Object-Oriented Programming version
-* Separation into `.h` and `.cpp` files
-* Improved user interface
-* Transaction reports
+* Audit logs
+* Account statements
+* API integration
+* Graphical User Interface
+* Automated testing
 
-## Author
+⸻
 
-**Abdulrahman Agbsh**
+Author
 
-C++ Programming Project
+Abdulrahman Aghbash
 
-## Purpose
+GitHub: ABDRHMA41
 
-This project was created for **learning and practicing C++ programming**, especially:
+⸻
 
-* File Handling
-* Data Structures
-* Functions
-* CRUD Operations
-* Client Management
-* Basic Banking Transactions
+Course
 
-## License
+ProgrammingAdvices
 
-This project is intended for **educational purposes**.
+Project developed and continuously improved while progressing through the programming and algorithms courses.
+
+⸻
+
+License
+
+This project is intended for educational and learning purposes.

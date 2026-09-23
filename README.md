@@ -1,299 +1,187 @@
-Bank System (C++ Console Application)
+# Bank Management System
 
-An advanced console-based Bank Management System developed in C++.
+A console-based **Bank Management System** developed in **C++** as a practical application of programming, algorithms, file handling, and problem-solving concepts.
 
-This project evolved from a basic client management application into a more complete banking administration system. It includes client management, banking transactions, user management, authentication, and Bitwise-based permission control.
+The project was initially based on the Bank Management System developed during **Programming Advices Courses 6 & 7**, and was then extended with additional features and improvements.
 
-The project was continuously improved throughout the ProgrammingAdvices courses, with new algorithms, data structures, validation, and system-management features added over time.
+---
 
-⸻
+## Features
 
-Key Features
+### Client Management
 
-1. Client Management
+* Show all clients
+* Add new clients
+* Delete clients
+* Update client information
+* Find clients by Account Number
+* Prevent duplicate Account Numbers
 
-* Show Client List: Display all registered clients in a formatted table.
-* Add New Client: Add new clients with validation against duplicate Account Numbers.
-* Update Client: Modify existing client information.
-* Delete Client: Delete clients using the Mark for Delete pattern.
-* Find Client: Search for a client using the Account Number.
-* Client Data Validation: Validate account information before saving changes.
+### Transactions
 
-⸻
+* Deposit money
+* Withdraw money
+* Validate withdrawal amount against account balance
+* Show total balances
 
-2. User Management & Permissions
+### User Management
 
-The system includes a complete user-management and authentication system.
+* Add new users
+* Delete users
+* Update users
+* Find users
+* Prevent duplicate usernames
+* Protect the `Admin` user from deletion
 
-* Login System: Users must authenticate using a Username and Password.
-* User CRUD Operations: Show, Add, Update, Delete, and Find users.
-* Permission System: Control access to system operations using Bitwise permissions.
-* Granular Permissions: Permissions can be combined to provide different levels of access.
-* Admin Protection: The Admin superuser is protected from deletion or loss of full privileges.
+### Login System
 
-Bitwise Permission System
+* Username and password authentication
+* Current user tracking
+* Access control based on user permissions
 
-Permissions are represented using integer flags and combined using bitwise operations.
+### Permissions System
 
-For example:
+Users can be assigned different permissions for:
 
-Read        = 1
-Add         = 2
-Delete      = 4
-Update      = 8
-Transactions = 16
-ManageUsers = 32
+* List Clients
+* Add New Client
+* Delete Client
+* Update Client
+* Find Client
+* Transactions
+* Manage Users
+* Full Access
 
-Multiple permissions can be combined into a single value:
+The project uses a permission system based on **bitwise operations**.
 
-Permissions = Read | Add | Update
+---
 
-The special value:
+## File Handling
 
--1
+The system stores its data using text files:
 
-grants full system access to the administrator.
-
-⸻
-
-3. Banking Transactions
-
-The system provides basic banking transaction functionality.
-
-* Deposit: Add money to a client’s account.
-* Withdraw: Withdraw money after validating the available balance.
-* Balance Validation: Prevent withdrawals that exceed the account balance.
-* Total Balances: Calculate and display the total balance of all client accounts.
-* Transaction Permissions: Access to transaction operations is controlled by user permissions.
-
-⸻
-
-4. Authentication & Access Control
-
-The application follows an authentication-first workflow:
-
-Username + Password
-        │
-        ▼
-Authentication
-        │
-        ▼
-Permission Validation
-        │
-        ▼
-Main Menu
-        │
-        ├── Client Management
-        ├── Transactions
-        ├── User Management
-        └── Logout
-
-Users can only access operations allowed by their assigned permissions.
-
-⸻
-
-Algorithms & Programming Concepts
-
-The project applies concepts learned throughout the ProgrammingAdvices courses, including:
-
-* Object-oriented programming
-* Functions and modular programming
-* Structures and enumerations
-* File handling
-* Vectors and dynamic data
-* Searching and filtering
-* Data validation
-* Record serialization and parsing
-* CRUD operations
-* Algorithmic problem solving
-* Bitwise operations
-* Permission flags
-* Authentication and access control
-* Data persistence
-
-The project was also updated as part of Course 8 – Algorithms Level 4, where additional algorithmic concepts and improvements were applied to the existing Bank System.
-
-⸻
-
-Architecture & Data Handling
-
-The application is organized into separate components responsible for different system operations.
-
-Main Program
-│
-├── Login & Authentication
-│
-├── Client Management
-│   ├── Show Clients
-│   ├── Add Client
-│   ├── Update Client
-│   ├── Delete Client
-│   └── Find Client
-│
-├── Transactions
-│   ├── Deposit
-│   ├── Withdraw
-│   └── Total Balances
-│
-├── User Management
-│   ├── Show Users
-│   ├── Add User
-│   ├── Update User
-│   ├── Delete User
-│   └── Find User
-│
-└── Permission System
-    └── Bitwise Access Control
-
-Data Persistence
-
-The application stores data locally in text files and loads it into memory when required.
-
-Data is separated using the custom delimiter:
-
-#//#
-
-The project uses std::vector for in-memory data management and rewrites the corresponding files when records are modified.
-
-⸻
-
-Data Storage
-
+```text
 Clients.txt
-
-Client records follow this format:
-
-AccountNumber#//#PINCode#//#Name#//#Phone#//#AccountBalance
-
-Example:
-
-A1001#//#1234#//#Abdulrahman#//#0999999999#//#1500
-
 Users.txt
+```
 
-User records follow this format:
+The application supports:
 
-Username#//#Password#//#Permissions
+* Reading data from files
+* Adding new records
+* Updating records
+* Deleting records
+* Saving modified data
+* Loading records into vectors for processing
 
-Example:
+---
 
-Admin#//#1234#//#-1
+## Technical Concepts
 
-Where:
+This project applies several C++ concepts, including:
 
--1 = Full Permissions
-
-⸻
-
-Main Menu
-
-After successful authentication, authorized users can access:
-
-===========================
-        MAIN MENU
-===========================
-[1] Client Management
-[2] Transactions
-[3] Manage Users
-[4] Logout
-
-The available operations depend on the permissions assigned to the logged-in user.
-
-⸻
-
-Project Evolution
-
-Initial Version
-
-The original project focused mainly on:
-
-* Client management
-* Adding clients
-* Updating clients
-* Deleting clients
-* Searching for clients
-* Reading and writing client data
-
-Updated Version
-
-The system was expanded with:
-
-* User authentication
-* User management
-* Bitwise permissions
-* Role-based access concepts
-* Banking transactions
-* Deposit and withdrawal
-* Total balance calculation
-* Permission-based menu access
-* Administrator protection
-* Additional algorithms and improvements
-
-This transformation turned the project from a basic client-management application into a more complete Bank Management System.
-
-⸻
-
-Technologies
-
-* C++
-* Standard C++ Library
+* Structures
+* Functions
+* Enumerations
+* Vectors
+* Strings
 * File I/O
-* std::vector
-* Bitwise Operations
-* Object-Oriented Programming
-* Algorithms & Problem Solving
-
-⸻
-
-Learning Objectives
-
-This project was developed as a practical application of programming and algorithmic concepts learned through the ProgrammingAdvices courses.
-
-It focuses on transforming theoretical programming concepts into a real-world style application involving:
-
-* Data management
-* Authentication
-* Authorization
-* Algorithms
-* File persistence
-* Business logic
+* Searching
+* Data validation
+* Record conversion
+* CRUD operations
+* References
 * Modular programming
+* Bitwise operators
+* Menu-driven programming
+
+---
+
+## Project Structure
+
+```text
+Bank/
+│
+├── Bank.cpp
+├── Clients.txt
+├── Users.txt
+├── Bank.slnx
+└── Bank.vcxproj
+```
+
+---
+
+## Development & Improvements
+
+The project was further developed by adding and improving:
+
+* User Management System
+* Login and authentication
+* Permission-based access control
+* User CRUD operations
+* Deposit and Withdrawal transactions
+* Total balance calculation
+* Client and user validation
+* Duplicate record prevention
+* File-based data persistence
+* Permission checks using bitwise operations
+* Improved menu organization
+* Additional functions for searching, updating, saving, and loading records
+
+---
+
+## Learning Path
+
+This project represents the practical application of concepts learned through:
+
+### Course 6
+
+**Introduction to Programming Using C++ – Level 2**
+
+Key concepts applied:
+
+* Advanced C++ programming
+* Functions
+* Vectors
+* File handling
+* Data structures
+* Memory and programming concepts
+* Debugging and problem solving
+
+### Course 7
+
+**Algorithms – Level 3**
+
+Key concepts applied:
+
 * Problem solving
+* Algorithms
+* Searching
+* Data processing
+* Records
+* Strings and vectors
+* File-based data management
 
-⸻
+---
 
-Future Improvements
+## Technologies
 
-Possible future improvements include:
+* **C++**
+* **Visual Studio**
+* **Git**
+* **GitHub**
+* Text File Storage
 
-* Database integration using SQL Server
-* Password hashing and stronger authentication
-* More advanced roles and permissions
-* Transaction history
-* Audit logs
-* Account statements
-* API integration
-* Graphical User Interface
-* Automated testing
+---
 
-⸻
+## Credits
 
-Author
+This project was developed as part of my learning journey with:
 
-Abdulrahman Aghbash
+**Programming Advices**
+**Dr. Mohammed Abu-Hadhoud**
 
-GitHub: ABDRHMA41
+The project was extended and modified to apply additional concepts and features learned during the courses.
 
-⸻
+---
 
-Course
-
-ProgrammingAdvices
-
-Project developed and continuously improved while progressing through the programming and algorithms courses.
-
-⸻
-
-License
-
-This project is intended for educational and learning purposes.

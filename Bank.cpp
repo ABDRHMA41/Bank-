@@ -1528,14 +1528,14 @@ void ShowMainMenue()
     cout << "===========================================\n";
     cout << "\t\tMain Menue Screen\n";
     cout << "===========================================\n";
-    cout << "\t[1] Show Client List.\n";
-    cout << "\t[2] Add New Client.\n";
-    cout << "\t[3] Delete Client.\n";
-    cout << "\t[4] Update Client Info.\n";
-    cout << "\t[5] Find Client.\n";
-    cout << "\t[6] Transactions.\n";
-    cout << "\t[7] Manage Users.\n";
-    cout << "\t[8] Logout.\n";
+    cout << "\t  [1] Show Client List          .\n";
+    cout << "\t  [2] Add New Client            .\n";
+    cout << "\t  [3] Delete Client             .\n";
+    cout << "\t  [4] Update Client Info        .\n";
+    cout << "\t  [5] Find Client               .\n";
+    cout << "\t  [6] Transactions              .\n";
+    cout << "\t  [7] Manage Users              .\n";
+    cout << "\t  [8] Logout                    .\n";
     cout << "===========================================\n";
 
 
